@@ -9,5 +9,9 @@ class Agenda{
         lista.push(contacto);
         console.log("Contacto agregado correctamente.");
     }
+
+    static buscarContacto(lista, nombre){
+        return lista.filter(contacto => contacto.nombre.trim().toLowerCase() === nombre.trim().toLowerCase());
+    }
 }
 module.exports = Agenda;
