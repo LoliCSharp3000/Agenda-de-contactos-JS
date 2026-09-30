@@ -2,17 +2,18 @@ const Agenda = require("./Agenda.js");
 const readline = require("readline-sync");
 
 const main = async ()=>{
-    const contactos = await Agenda.cargarAgenda();
+    const agenda = new Agenda();
+    await agenda.cargarAgenda();
     let fin = false;
     while(!fin){
         let opcion = readline.question("Ingrese una opción\n1: Agregar contacto\n2: Mostrar contactos\n3: Salir\n4: Buscar contactos por nombre\n5: Eliminar un contacto\n");
         switch(opcion){
             case "1":
-                await Agenda.agregarContacto(contactos, readline);
+                await agenda.agregarContacto(readline);
                 break;
             case "2":
                 console.log("Lista de contactos:");
-                contactos.forEach(contacto => {
+                agenda.lista.forEach(contacto => {
                     console.log(contacto.toString());
                 });
                 break;
@@ -22,7 +23,7 @@ const main = async ()=>{
                 break;
             case "4":
                 let nombre = readline.question("Pon el nombre del individuo:");
-                let listaT = Agenda.buscarContacto(contactos, nombre);
+                let listaT = agenda.buscarContacto(nombre);
                 if(listaT.length === 0){
                     console.log("contacto no encontrado.")
                 }else{
@@ -36,11 +37,11 @@ const main = async ()=>{
                 switch(opc){
                     case "1":
                         let correo = readline.question("Pon el correo: ");
-                        Agenda.eliminarContactoPorCorreo(contactos, correo);
+                        await agenda.eliminarContactoPorCorreo(correo);
                         break;
                     case "2":
                         let telefono = readline.question("Pon el telefono: ");
-                        Agenda.eliminarContactoPorTelefono(contactos, telefono);
+                        await agenda.eliminarContactoPorTelefono(telefono);
                         break;
                     default:
                         console.log("Pon el numero correcto");
